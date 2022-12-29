@@ -1,0 +1,7 @@
+
+clf = DecisionTreeClassifier(criterion='gini', splitter='best', max_depth=7, min_samples_split=5)
+clf.fit(X_train,Y_train)
+# xgb_clf = XGBClassifier(n_estimators = 10, random_state = 156)
+# xgb_clf.fit(X_train, Y_train, early_stopping_rounds = 100,eval_metric ='auc', eval_set = [(X_val, Y_val)]) 
+
+text_rep = tree.export_text(clf)

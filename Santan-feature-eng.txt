@@ -1,0 +1,75 @@
+
+
+************************************************************************
+* Uniqueness
+************************************************************************
+#Removing feature columns with low variance
+#Plotting number of unique values 
+unique_numbers = train.nunique()
+unique_dict = {}
+for i in unique_numbers.index:
+    dict_key = unique_numbers[i]
+    if dict_key in unique_dict.keys():
+        unique_dict[dict_key] += 1 
+    else:
+        unique_dict[dict_key] = 1
+
+sorted_unique_dict = {i:unique_dict[i] for i in sorted(unique_dict)}
+plt.bar(list(sorted_unique_dict.keys())[0:20], list(sorted_unique_dict.values())[0:20])
+plt.ylabel('Number of features')
+plt.xlabel('Number of unique values')
+plt.title('Variation of unique values in each feature')
+plt.show()
+
+#Drop all those features which is containing a single value
+newdf = train.copy()
+for i in newdf.columns:
+    if newdf[i].nunique() == 1:
+        newdf.drop([i], axis=1, inplace=True)
+
+print(newdf.shape)
+
+# ID                         76020
+# var3                         208
+# var15                        100
+# imp_ent_var16_ult1           596
+# imp_op_var39_comer_ult1     7551
+#                           ...  
+# saldo_medio_var44_hace3       33
+# saldo_medio_var44_ult1       141
+# saldo_medio_var44_ult3       141
+# var38                      57736
+# TARGET                         2
+# Length: 371, dtype: int64
+
+************************************************************************
+* Prep training data set: Test Split
+************************************************************************
+
+#Removing duplicate columns
+X = newdf.drop(['TARGET','ID'], axis=1)
+y = newdf['TARGET']
+X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8, random_state=42)
+
+#Remove Target column to prepare the "input data set"
+#Also drop the ID column that doesn't play a role
+X = newdf.drop(['TARGET','ID'], axis=1)
+
+#Extract the output in a Y vector
+y = newdf['TARGET']
+
+#Use train test split method that was imported
+X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8, random_state=42)
+
+#Print the set dimensions
+print ("X_train:", X_train.shape)
+print ("X_test:", X_test.shape)
+print ("Y_train:", y_train.shape)
+print ("Y_test:", y_test.shape)
+
+# Results
+# X_train: (60816, 335)
+# X_test: (15204, 335)
+# Y_train: (60816,)
+# Y_test: (15204,)
+

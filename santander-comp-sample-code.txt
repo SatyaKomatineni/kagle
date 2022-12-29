@@ -1,0 +1,55 @@
+
+
+Steps
+****************
+1. Upload file to Kagle
+2. Read the file
+3. Remove some features
+4. Remove over and  under sampling
+5. Split into training and test Steps
+6. Fit the model using decision tree
+7. Get the output of the test set
+
+Feature engineering
+*************************
+
+Nature of the file
+********************
+1. too many columns
+2. ID column and target column are different
+3. Over 300 feature columns
+
+Read file first
+***************************
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import tensorflow as tf
+from sklearn.model_selection import train_test_split
+
+from imblearn.over_sampling import SMOTE
+from imblearn.under_sampling import NearMiss
+from imblearn.under_sampling import RandomUnderSampler
+
+train = pd.read_csv('../input/santander-customer-satisfaction/train.csv')
+train.head(5)
+
+************************************************************************
+* Walking through directory trees: os.walk
+************************************************************************
+
+import numpy as np # linear algebra
+import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+
+# Input data files are available in the read-only "../input/" directory
+# For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory
+
+import os
+for dirname, _, filenames in os.walk('/kaggle/input'):
+    for filename in filenames:
+        print(os.path.join(dirname, filename))
+
+# You can write up to 20GB to the current directory (/kaggle/working/) that gets preserved as output when you create a version using "Save & Run All" 
+# You can also write temporary files to /kaggle/temp/, but they won't be saved outside of the current session
+

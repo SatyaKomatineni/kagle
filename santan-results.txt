@@ -1,0 +1,20 @@
+************************************************************************
+* For option 1
+************************************************************************
+clf_model = DecisionTreeClassifier(criterion='gini', splitter='best', max_depth=7, min_samples_split=5)
+
+Against trained data
+***************************
+Final Arrays input and output
+X:  (23366, 335)
+Y:  (23366,)
+
+Accuracy when tested against the training data itself
+0.8458443892835744
+
+Against the split test  data
+******************************
+X: (15204, 335)
+Y: (15204,)
+Accuracy when tested against the split testing data
+0.835438042620363

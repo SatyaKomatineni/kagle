@@ -1,0 +1,80 @@
+************************************************************************
+* Deal with Sampling
+************************************************************************
+#Get those features which have max number of unique values
+
+#Get the two features from the feature having max number of unique values
+most_varying_feature1 = unique_numbers.sort_values(ascending=False).index[1]
+most_varying_feature2 = unique_numbers.sort_values(ascending=False).index[2]
+
+#Checking for data imbalace
+print('Data imbalance before sampling: ')
+print('Number of zeros: ', y_train.value_counts()[0],'\nNumber of ones: ', y_train.value_counts()[1])
+print('Shape of x_train before sampling', X_train.shape,'\n\n\n')
+
+#Oversampling the minoiry class
+sm = SMOTE(sampling_strategy=0.2, random_state=42)
+X_over, y_over = sm.fit_resample(X_train, y_train)
+
+print('Data imbalance after oversampling (SMOTE): ')
+print('Number of zeros: ', y_over.value_counts()[0],'\nNumber of ones: ', y_over.value_counts()[1])
+print('Shape of x_train before sampling', X_over.shape,'\n\n\n')
+
+#Undersampling
+# undersample = NearMiss(version=3, n_neighbors_ver3=3)
+undersample = RandomUnderSampler(random_state=42)
+X_under, y_under = undersample.fit_resample(X_over,y_over)
+
+print('Data imbalance after final undersampling (random undersampler): ')
+print('Number of zeros: ', y_under.value_counts()[0],'\nNumber of ones: ', y_under.value_counts()[1])
+print('Shape of x_train before sampling', X_under.shape,'\n\n\n')
+
+
+************************************************************************
+* Deal with Sampling: There was a problem with an index
+************************************************************************
+
+Data imbalance before sampling: 
+Number of zeros:  58415 
+Number of ones:  58415
+Shape of x_train before sampling (60816, 335) 
+
+
+
+Data imbalance after oversampling (SMOTE): 
+Number of zeros:  58415 
+Number of ones:  58415
+Shape of x_train before sampling (70098, 335) 
+
+
+
+Data imbalance after final undersampling (random undersampler): 
+Number of zeros:  11683 
+Number of ones:  11683
+Shape of x_train before sampling (23366, 335) 
+
+
+************************************************************************
+* Deal with Sampling: My results
+************************************************************************
+Most varying feature 1:  var38
+Most varying feature 2:  saldo_medio_var5_ult3
+
+Data imbalance before sampling: 
+Number of zeros:  58415 
+Number of ones:  2401
+Shape of x_train before sampling (60816, 335) 
+
+
+
+Data imbalance after oversampling (SMOTE): 
+Number of zeros:  58415 
+Number of ones:  11683
+Shape of x_train after sampling (70098, 335) 
+
+
+
+Data imbalance after final undersampling (random undersampler): 
+Number of zeros:  11683 
+Number of ones:  11683
+Shape of x_train after sampling (23366, 335) 
